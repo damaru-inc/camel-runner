@@ -25,6 +25,7 @@
 		<c:to uri="rabbitmq://localhost/rabbitIn?queue=rabbitQueueIn&amp;autoDelete=false"/>
 	</c:route>
 
+<!--
 	<c:route>
 		<c:from uri="activemq:topic:activeOut"/>
 		<c:bean ref="MyProcessor"/>
@@ -37,6 +38,7 @@
 		<c:to uri="log:ACTIVEMQ-LOGGER?level=WARN"/>
 		<c:to uri="activemq:topic:activeIn"/>
 	</c:route>
+-->
 </c:camelContext>
 
 </beans>

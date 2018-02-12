@@ -11,7 +11,14 @@
 		<c:from uri="rabbitmq://localhost/rabbitOut?queue=rabbitQueueOut&amp;autoDelete=false"/>
 		<c:bean ref="MyProcessor"/>
 		<c:to uri="log:RABBIT-LOGGER?level=WARN"/>
-		<c:to uri="solace-jcsmp:topic:sol/in?host=mr-dnkn9xyfl.messaging.datago.io&amp;port=20000&amp;vpnName=msgvpn-dnknawhy9&amp;username=datago-client-username&amp;password=mfeaa4311n3s05sc3384k9mlhs"/>
+		<c:to uri="solace-jcsmp:topic:sol/in"/>
+	</c:route>
+
+	<c:route>
+		<c:from uri="solace-jcsmp:queue:solaceOut"/>
+		<c:bean ref="MyProcessor"/>
+		<c:to uri="log:RABBIT-LOGGER?level=WARN"/>
+		<c:to uri="rabbitmq://localhost/rabbitIn?queue=rabbitQueueIn&amp;autoDelete=false"/>
 	</c:route>
 
 </c:camelContext>

@@ -14,7 +14,7 @@ public class MyProcessor implements Processor {
 	public void process(Exchange exchange) throws Exception {
 		Message message = exchange.getIn();
 		Object body = message.getBody();
-		logger.info("MyProcessor Got " + body.getClass());
+		logger.warn("MyProcessor Got " + body.getClass());
 		String text;
 		
 		if (body instanceof byte[]) {

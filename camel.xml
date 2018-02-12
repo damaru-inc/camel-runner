@@ -5,6 +5,10 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
+<bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent"> 
+	<property name="brokerURL" value="tcp://localhost:61616"/>
+</bean>
+
 <c:camelContext>
 
 	<c:route>
@@ -21,6 +25,18 @@
 		<c:to uri="rabbitmq://localhost/rabbitIn?queue=rabbitQueueIn&amp;autoDelete=false"/>
 	</c:route>
 
+	<c:route>
+		<c:from uri="activemq:topic:activeOut"/>
+		<c:bean ref="MyProcessor"/>
+		<c:to uri="log:ACTIVEMQ-LOGGER?level=WARN"/>
+		<c:to uri="solace-jcsmp:topic:sol/in"/>
+	</c:route>
+	<c:route>
+		<c:from uri="solace-jcsmp:queue:solaceOut"/>
+		<c:bean ref="MyProcessor"/>
+		<c:to uri="log:ACTIVEMQ-LOGGER?level=WARN"/>
+		<c:to uri="activemq:topic:activeIn"/>
+	</c:route>
 </c:camelContext>
 
 </beans>

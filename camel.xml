@@ -12,9 +12,10 @@
 <c:camelContext>
 
 	<c:route>
-		<c:from uri="rabbitmq://localhost/rabbitOut?queue=rabbitQueueOut&amp;autoDelete=false"/>
+		<c:from uri="timer:timer"/>
 		<c:bean ref="MyProcessor"/>
-		<c:to uri="log:RABBIT-LOGGER?level=WARN"/>
+                <c:convertBodyTo type="String"/>
+		<c:to uri="log:TIMER-LOGGER?level=WARN"/>
 		<c:to uri="solace-jcsmp:topic:sol/in"/>
 	</c:route>
 
@@ -26,6 +27,12 @@
 	</c:route>
 
 <!--
+	<c:route>
+		<c:from uri="rabbitmq://localhost/rabbitOut?queue=rabbitQueueOut&amp;autoDelete=false"/>
+		<c:bean ref="MyProcessor"/>
+		<c:to uri="log:RABBIT-LOGGER?level=WARN"/>
+		<c:to uri="solace-jcsmp:topic:sol/in"/>
+	</c:route>
 	<c:route>
 		<c:from uri="activemq:topic:activeOut"/>
 		<c:bean ref="MyProcessor"/>

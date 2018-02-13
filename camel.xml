@@ -14,38 +14,35 @@
 	<c:route>
 		<c:from uri="timer:timer"/>
 		<c:bean ref="MyProcessor"/>
-                <c:convertBodyTo type="String"/>
-		<c:to uri="log:TIMER-LOGGER?level=WARN"/>
-		<c:to uri="solace-jcsmp:topic:sol/in"/>
+		<c:to uri="solace-jcsmp:topic:timerInTopic"/>
 	</c:route>
 
 	<c:route>
-		<c:from uri="solace-jcsmp:queue:solaceOut"/>
-		<c:bean ref="MyProcessor"/>
-		<c:to uri="log:RABBIT-LOGGER?level=WARN"/>
-		<c:to uri="rabbitmq://localhost/rabbitIn?queue=rabbitQueueIn&amp;autoDelete=false"/>
+		<c:from uri="solace-jcsmp:queue:rabbitOutQueue"/>
+		<c:to uri="log:SOLACE-RABBIT-LOGGER?level=WARN"/>
+		<c:to uri="rabbitmq://localhost/rabbitIn?queue=rabbitInQueue&amp;autoDelete=false"/>
 	</c:route>
 
-<!--
 	<c:route>
-		<c:from uri="rabbitmq://localhost/rabbitOut?queue=rabbitQueueOut&amp;autoDelete=false"/>
+		<c:from uri="rabbitmq://localhost/rabbitOut?queue=rabbitOutQueue&amp;autoDelete=false"/>
 		<c:bean ref="MyProcessor"/>
 		<c:to uri="log:RABBIT-LOGGER?level=WARN"/>
-		<c:to uri="solace-jcsmp:topic:sol/in"/>
+		<c:to uri="solace-jcsmp:topic:rabbitInTopic"/>
 	</c:route>
+
 	<c:route>
-		<c:from uri="activemq:topic:activeOut"/>
+		<c:from uri="solace-jcsmp:topic:activeOutDirect"/>
+		<c:to uri="log:SOLACE-ACTIVEMQ-LOGGER?level=WARN"/>
+		<c:to uri="activemq:topic:activeInTopic"/>
+	</c:route>
+
+	<c:route>
+		<c:from uri="activemq:queue:activeOutQueue"/>
 		<c:bean ref="MyProcessor"/>
 		<c:to uri="log:ACTIVEMQ-LOGGER?level=WARN"/>
-		<c:to uri="solace-jcsmp:topic:sol/in"/>
+		<c:to uri="solace-jcsmp:topic:activeInTopic"/>
 	</c:route>
-	<c:route>
-		<c:from uri="solace-jcsmp:queue:solaceOut"/>
-		<c:bean ref="MyProcessor"/>
-		<c:to uri="log:ACTIVEMQ-LOGGER?level=WARN"/>
-		<c:to uri="activemq:topic:activeIn"/>
-	</c:route>
--->
+
 </c:camelContext>
 
 </beans>

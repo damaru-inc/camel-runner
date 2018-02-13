@@ -1,16 +1,16 @@
 buildscript {
-	ext {
-		springCloudConnectorsVersion = '1.2.3.RELEASE'
+    ext {
+        springCloudConnectorsVersion = '1.2.3.RELEASE'
         springBootVersion = '1.5.9'
-		licenseGradlePluginVersion = '0.10.0'
-		swagger_annotations_version = "1.5.8"
-		jackson_version = "2.7.5"
-		jersey_version = "2.22.2"
-		jodatime_version = "2.9.9"
-	}
+        licenseGradlePluginVersion = '0.10.0'
+        swagger_annotations_version = "1.5.8"
+        jackson_version = "2.7.5"
+        jersey_version = "2.22.2"
+        jodatime_version = "2.9.9"
+    }
 
     repositories {
-    	mavenCentral()
+        mavenCentral()
         mavenLocal()
     }
 
@@ -37,19 +37,17 @@ repositories {
 dependencies {
     // Spring Boot (version is specified in plugins block)
     compile("org.springframework.boot:spring-boot-starter-log4j2")
-    
-	// Camel components
+
+    // Camel components
     compile("org.apache.camel:camel-rabbitmq:2.20.2")
     compile("org.apache.camel:camel-jms:2.20.2")
     compile("org.apache.camel:camel-twitter:2.20.2")
     compile("org.apache.camel:camel-spring-boot-starter:2.20.2")
     compile("org.apache.activemq:activemq-core:5.7.0")
-	//compile group: 'org.apache.activemq', name: 'activemq-pool', version: '5.15.2'
     compile("org.apache.activemq:activemq-camel:5.7.0")
     compile("com.solace.camel.component:solace-camel-component:0.0.1-SNAPSHOT")
-
     compile("org.twitter4j:twitter4j-core:[4.0,)")
-	
+
     // Testing
     testCompile("org.springframework.boot:spring-boot-starter-test")
     testCompile ("junit:junit")
